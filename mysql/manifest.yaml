@@ -47,7 +47,7 @@ spec:
         - name: mysql
           mountPath: /var/lib/mysql #absolute path of mysql
       nodeSelector:
-          topology.kubernetes.io/zone: us-east-1c # include your running node availability zone, must be in containers level
+          topology.kubernetes.io/zone: us-east-1c # include your running node availability zone, must be in containers level of spec
       volumes:
       - name: mysql
         persistentVolumeClaim:
