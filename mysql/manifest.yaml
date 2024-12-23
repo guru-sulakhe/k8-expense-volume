@@ -46,6 +46,8 @@ spec:
         volumeMounts:
         - name: mysql
           mountPath: /var/lib/mysql #absolute path of mysql
+      nodeSelector:
+          topology.kubernetes.io/zone: us-east-1c # include your running node availability zone, must be in containers level
       volumes:
       - name: mysql
         persistentVolumeClaim:
@@ -57,7 +59,8 @@ kind: Service
 metadata: 
   name: mysql
   namespace: expense
-spec: 
+spec:
+  clusterIP: None #This is called headless service
   selectors:
     component: mysql 
     project: expense
