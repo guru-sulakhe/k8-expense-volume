@@ -50,5 +50,20 @@ spec:
       - name: mysql
         persistentVolumeClaim:
           claimName: mysql-pvc #your pvc name
-
+-------
+# This service is used to call nginx Pod
+apiVersion: v1
+kind: Service
+metadata: 
+  name: mysql
+  namespace: expense
+spec: 
+  selectors:
+    component: mysql 
+    project: expense
+    tier: db
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
     
