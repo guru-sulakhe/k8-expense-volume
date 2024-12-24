@@ -66,9 +66,8 @@ spec:
     - metadata:
         name: mysql # Do not change this name unless you set up a volume mount for the data path.
       spec:
-        accessModes:
-        - ReadWriteOnce
-        storageClassName: standard
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "expense-ebs-dynamic-sc" #your storage class name
         resources:
           requests:
             storage: 1G #pv is created based on this storage
