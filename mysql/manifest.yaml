@@ -71,7 +71,7 @@ spec:
         storageClassName: standard
         resources:
           requests:
-            storage: 1G
+            storage: 1G #pv is created based on this storage
 -------
 
     
