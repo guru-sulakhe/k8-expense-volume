@@ -1,17 +1,35 @@
-# claiming process of PersistentVolume
-# PVC---> Persistent Volume Claim, pod should claim,i..e i want the volume from pod
+# Headless service is used for implementing of clustering service for mysql db
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pvc
-  namespace: expense #your namespace name which is created for the mysql
+kind: Service
+metadata: 
+  name: mysql-headless
+  namespace: expense
 spec:
-  storageClassName: "expense-ebs-dynamic-sc" # mention your storage class name which is created for dynamic provision of volumes
-  accessModes:
-    - ReadWriteOnce #the volume can be mounted as read-write by single node
-  resources:
-    requests:
-      storage: 4Gi #creating 4Gi volume size of volume in ec2 resource of aws
+  clusterIP: None #For headless service clusterIP should be None
+  selectors:
+    component: mysql 
+    project: expense
+    tier: db
+  ports:
+  - protocol: TCP
+    port: 3306 #service-port
+    targetPort: 3306 #target-port
+-------
+#Service is used to call a pod using the selector and runs pod in the mentioned ports
+apiVersion: v1
+kind: Service
+metadata: 
+  name: mysql
+  namespace: expense
+spec:
+  selectors:
+    component: mysql 
+    project: expense
+    tier: db
+  ports:
+  - protocol: TCP
+    port: 3306 #service-port
+    targetPort: 3306 #target-port
 -------
 #A StatefulSet runs a group of Pods, and maintains a sticky identity for each of those Pods. 
 #This is useful for managing applications that need persistent storage or a stable, unique network identity
@@ -27,7 +45,7 @@ spec:
       component: mysql 
       project: expense
       tier: db
-  serviceName: "mysql"
+  serviceName: "mysql-headless" #provide your headless service name
   replicas: 2 # by default is 1
   template:
     metadata:
@@ -40,33 +58,20 @@ spec:
       containers:
       - name: mysql
         image: guru1188/mysql:v1.0
-        ports:
-        - containerPort: 80
-          name: web
         volumeMounts:
         - name: mysql
           mountPath: /var/lib/mysql #absolute path of mysql
-      nodeSelector:
-          topology.kubernetes.io/zone: us-east-1c # include your running node availability zone, must be in containers level of spec
-      volumes:
-      - name: mysql
-        persistentVolumeClaim:
-          claimName: mysql-pvc #your pvc name
+  #PVC declaration
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql # Do not change this name unless you set up a volume mount for the data path.
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1G
 -------
-# This service is used to call nginx Pod
-apiVersion: v1
-kind: Service
-metadata: 
-  name: mysql
-  namespace: expense
-spec:
-  clusterIP: None #This is called headless service
-  selectors:
-    component: mysql 
-    project: expense
-    tier: db
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: 3306
+
     
