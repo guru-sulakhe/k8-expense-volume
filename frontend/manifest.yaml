@@ -155,7 +155,7 @@ metadata:
   namespace: expense
 spec: 
   type: LoadBalancer
-  selectors:
+  selectors: #with the help of selectors loadbalancer will be attached to all the replicas of the frontend
     project: expense
     component: frontend
     tier: web
