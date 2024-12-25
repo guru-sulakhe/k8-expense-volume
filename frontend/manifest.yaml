@@ -145,8 +145,8 @@ spec:
 
 
 ------
-# for connection mysql and backend pods we need to ensure to include a service, which will helps in communication between pods i.,e LoadBalancer
-# This service helps in configuring in R53 records
+# for connection to frontend which will helps in communication between pods i.,e LoadBalancer
+# This service helps in configuring in R53 records and also helps in managing traffic  distributing traffic from outside the Kubernetes cluster to appropriate pods within the cluster.
 apiVersion: v1
 kind: Service
 metadata: 
