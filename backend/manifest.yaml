@@ -42,7 +42,7 @@ spec:
 
 
 ------
-# for connection mysql and backend pods we need to ensure to include a service which will helps in communication between pods i.,e Cluster IP
+# for connection to backend including service,which will helps in communication between pods i.,e Cluster IP
 # This service is used to call backend pods
 apiVersion: v1
 kind: Service
