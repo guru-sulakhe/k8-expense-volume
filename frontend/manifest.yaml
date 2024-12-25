@@ -6,7 +6,7 @@ metadata:
   name: frontend
   namespace: expense
 data:
-  # for not applying rebuild we need to mention nginx.conf file and also nginx can't be run on 80 port in kubernetes thus we are including out nginx.conf
+  # for not applying rebuild we need to mention nginx.conf file and also nginx can't be run on 80 port in kubernetes thus we are including out nginx.conf in configMap
   # thus changin port number of nginx to 8080
   nginx.conf: |
   user www-data;
@@ -108,7 +108,7 @@ metadata:
     project: expense
     tier: web
 spec:
-  replicas: 2
+  replicas: 2 #replicas will be created with the help of selectors and labels of frontend image
   selector: 
     matchLabels:
       component: frontend
