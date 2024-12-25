@@ -1,5 +1,5 @@
 #a configMap is used to store non-confidential data in key-value pairs.
-#This will helps in connecting to db-host from backend i..e ensuring connection to db
+#This will helps in connecting to backend from frontend i..e ensuring connection to backend
 kind: configMap
 apiVersion: v1
 metadata:  
