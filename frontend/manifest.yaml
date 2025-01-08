@@ -123,14 +123,15 @@ spec:
         tier: web
         project: expense
     spec:
-    - name: frontend
-      image: guru1188/frontend:v1.0
-      # mounting volume nginx-conf
-      volumeMounts:
-      - name: nginx-conf
-        mountPath: /etc/nginx/nginx.conf
-        subPath: nginx.conf
-        readOnly: true
+      containers:
+      - name: frontend
+        image: guru1188/frontend:v1.0
+        # mounting volume nginx-conf
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
       volumes:
       - name: nginx-conf
       # envFrom:
