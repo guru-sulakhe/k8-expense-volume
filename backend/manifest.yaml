@@ -7,7 +7,7 @@ metadata:
   namespace: expense
 data:
   DB_HOST: mysql #mysql service component service name, it is a part of configuration 
---------
+---
 #Deployment is used in upgrading the image version of the image
 kind: Deployment
 apiVersion: apps/v1
@@ -41,9 +41,7 @@ spec:
       envFrom:
       - configMapRef:
           name: backend #your configMap name
-
-
-------
+---
 # for connection to backend including service,which will helps in communication between pods i.,e Cluster IP
 # This service is used to call backend pods
 apiVersion: v1
