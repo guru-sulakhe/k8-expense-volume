@@ -33,6 +33,8 @@ spec:
 ---
 #A StatefulSet runs a group of Pods, and maintains a sticky identity for each of those Pods. 
 #This is useful for managing applications that need persistent storage or a stable, unique network identity
+#This is where StatefulSets enter the scene, ensuring that each pod's identity and data are maintained across restarts and rescheduling.
+#a StatefulSet remembers its data (state) even if moved around in a cluster.
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
