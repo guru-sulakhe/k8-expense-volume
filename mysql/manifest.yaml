@@ -1,4 +1,5 @@
-# Headless service is used for implementing of clustering service for mysql db
+# Headless service is used for implementing of clustering service for mysql db.
+# which will helps in communication of the data from one node to other nodes of cluster
 apiVersion: v1
 kind: Service
 metadata: 
