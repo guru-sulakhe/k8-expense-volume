@@ -132,8 +132,6 @@ spec:
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
-      volumes:
-      - name: nginx-conf
       # envFrom:
       # - configMapRef:
       #     name: frontend
@@ -164,3 +162,7 @@ spec:
     port: 80 #servicer port
     targetPort: 8080
     
+# Note:
+# when you are using configMap for storing the configurations data, then you can mount that ConfigMap as a volume in a pod.
+# allowing your containers to access the configuration data as files within their filesystem. 
+      
