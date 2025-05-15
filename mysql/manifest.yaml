@@ -14,7 +14,7 @@ spec:
   - protocol: TCP
     port: 3306 #service-port
     targetPort: 3306 #target-port
--------
+---
 #Service is used to call a pod using the selector and runs pod in the mentioned ports
 apiVersion: v1
 kind: Service
@@ -30,7 +30,7 @@ spec:
   - protocol: TCP
     port: 3306 #service-port
     targetPort: 3306 #target-port
--------
+---
 #A StatefulSet runs a group of Pods, and maintains a sticky identity for each of those Pods. 
 #This is useful for managing applications that need persistent storage or a stable, unique network identity
 apiVersion: apps/v1
@@ -58,19 +58,21 @@ spec:
       containers:
       - name: mysql
         image: guru1188/mysql:v1.0
+        nodeSelector: #your nodes availability zone
+          topology.kubernetes.io/zone=us-east-1a
         volumeMounts:
         - name: mysql
           mountPath: /var/lib/mysql #absolute path of mysql
   #PVC declaration
   volumeClaimTemplates:
-    - metadata:
-        name: mysql # Do not change this name unless you set up a volume mount for the data path.
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "expense-ebs-dynamic-sc" #your storage class name
-        resources:
-          requests:
-            storage: 1G #pv is created based on this storage
--------
+  - metadata:
+  name: mysql
+  spec:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "expense-ebs-dynamic-sc"
+    resources:
+      requests:
+        storage: 1G
+---
 
     
